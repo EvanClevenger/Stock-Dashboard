@@ -24,22 +24,17 @@ const Chart = () => {
     });
   };
 
+  console.log(data); //data is imported correctly
+
   return (
     <Card>
       <ResponsiveContainer>
+        {/*recharts component */}
         <AreaChart data={formatData(data)}>
           <defs>
             <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="#rgb(199 210 254)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="#rgb(199 210 254)"
-                stopOpacity={0}
-              />
+              <stop offset="0%" stopColor="##a442f5" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#a442f5" stopOpacity={0} />
             </linearGradient>
           </defs>
           <Area
@@ -52,13 +47,17 @@ const Chart = () => {
           />
           <Tooltip />
           <XAxis dataKey={"date"} />
-          <YAxis dataKey={["dataMin", "dataMax"]} />
+          <YAxis domain={["dataMin", "dataMax"]} />
         </AreaChart>
       </ResponsiveContainer>
     </Card>
   );
 };
 
-/** t = array of timestamps from mock */
-/** c = array of close prices from mock */
+{
+  /** t = array of timestamps from mock */
+}
+{
+  /** c = array of close prices from mock */
+}
 export default Chart;
