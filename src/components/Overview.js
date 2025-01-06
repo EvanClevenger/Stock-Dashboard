@@ -19,7 +19,7 @@ const Overview = ({ symbol, price, change, changePercent, currency }) => {
             change > 0 ? "text-lime-500" : "text-red-500"
           }`}
         >
-          {change} <span>{changePercent}%</span>
+          {change} <span>({changePercent}%)</span>
         </span>
       </div>
     </Card>
