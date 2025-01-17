@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { mockSearchResults } from "../constants/mock";
 import {
   XIcon,
   SearchIcon,
 } from "@heroicons/react/solid"; /* these are npm packages */
 import SearchResults from "./SearchResults";
+import ThemeContext from "../context/ThemeContext";
 
 const Search = () => {
   const [input, setInput] = useState("");
+  const { darkMode } = useContext(ThemeContext);
   const [bestMatches, setBestMatches] = useState(mockSearchResults.result);
   /* input holds current state,setInput updates state,useState("")initiates input with empty str  */
 
@@ -21,11 +23,17 @@ const Search = () => {
   };
 
   return (
-    <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200">
+    <div
+      className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96  ${
+        darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200"
+      }`}
+    >
       <input
         type="text"
         value={input}
-        className="w-full px-4 py-2 focus:outline-none rounded-md"
+        className={`w-full px-4 py-2 focus:outline-none rounded-md ${
+          darkMode ? "bg-gray-900" : null
+        }`}
         placeholder="Search your stock here"
         onChange={(event) => {
           setInput(event.target.value);
