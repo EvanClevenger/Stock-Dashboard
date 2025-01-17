@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
-import { mockSearchResults } from "../constants/mock";
 import {
   XIcon,
   SearchIcon,
 } from "@heroicons/react/solid"; /* these are npm packages */
 import SearchResults from "./SearchResults";
 import ThemeContext from "../context/ThemeContext";
+import { searchSymbol } from "../api/stock-api";
 
 const Search = () => {
   const [input, setInput] = useState("");
   const { darkMode } = useContext(ThemeContext);
-  const [bestMatches, setBestMatches] = useState(mockSearchResults.result);
+  const [bestMatches, setBestMatches] = useState([]);
   /* input holds current state,setInput updates state,useState("")initiates input with empty str  */
 
   const clear = () => {
@@ -18,8 +18,17 @@ const Search = () => {
     setBestMatches([]);
   };
 
-  const updateBestMatches = () => {
-    setBestMatches(mockSearchResults.result);
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        const SearchResults = await searchSymbol(input);
+        const result = SearchResults.result;
+        setBestMatches(result);
+      }
+    } catch (error) {
+      setBestMatches([]);
+      console.log(error);
+    }
   };
 
   return (
