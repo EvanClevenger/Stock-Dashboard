@@ -51,7 +51,7 @@ const Dashboard = () => {
 
       <div>
         <Overview
-          symbol={stockSymbol.ticker}
+          symbol={stockSymbol}
           price={quote.pc}
           change={quote.d}
           changePercent={quote.dp}

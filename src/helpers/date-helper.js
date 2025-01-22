@@ -13,5 +13,6 @@ export const createDate = (date, days, weeks, months, years) => {
   newDate.setDate(newDate.getDate() + days + 7 * weeks);
   newDate.setMonth(newDate.getMonth() + months);
   newDate.setFullYear(newDate.getFullYear() + years);
+  return newDate;
 };
 //creates start date and end date which pass through api
