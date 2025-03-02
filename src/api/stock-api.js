@@ -35,17 +35,21 @@ export const fetchQuote = async (stockSymbol) => {
 };
 
 export const fetchHistoricalData = async (
-  stockSymbol,
-  resolution,
-  from,
-  to
+  // stockSymbol,
+  // resolution,
+  // from,
+  // to,
+  symbol
 ) => {
-  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+  // const url = `${secondPath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&apikey=${process.env.REACT_APP_API_KEY_Alpha}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
   }
+  console.log(response);
+
   return await response.json();
 };
