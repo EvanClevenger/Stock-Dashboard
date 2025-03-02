@@ -27,13 +27,22 @@ const Chart = () => {
 
   const { stockSymbol } = useContext(StockContext);
 
-  const formatData = () => {
-    return data.c.map((item, index) => {
-      return {
-        value: item.toFixed(2),
-        date: convertUnixTimeStampToDate(data.t[index]),
-      };
-    });
+  // const formatData = () => {
+  //   return data.c.map((item, index) => {
+  //     return {
+  //       value: item.toFixed(2),
+  //       date: convertUnixTimeStampToDate(data.t[index]),
+  //     };
+  //   });
+  // };
+
+  const formatData = (rawData) => {
+    return Object.keys(rawData)
+      .map((date) => ({
+        date,
+        value: parseFloat(rawData[date]["5 adjusted close"]).toFixed(2),
+      }))
+      .reverse();
   };
 
   useEffect(() => {
@@ -50,22 +59,16 @@ const Chart = () => {
     };
     const updateChartData = async () => {
       try {
-        const { startTimeStampUnix, endTimeStampUnix } = getDateRange();
-        const resolution = chartConfig[filter].resolution;
-        const result = await fetchHistoricalData(
-          stockSymbol,
-          resolution,
-          startTimeStampUnix,
-          endTimeStampUnix
-        );
+        const result = await fetchHistoricalData(stockSymbol);
         setData(formatData(result));
       } catch (error) {
         setData([]);
         console.log(error);
       }
     };
+
     updateChartData();
-  }, [stockSymbol, filter]);
+  }, [stockSymbol]);
 
   console.log(data); //data is imported correctly
 

@@ -34,14 +34,7 @@ export const fetchQuote = async (stockSymbol) => {
   return await response.json();
 };
 
-export const fetchHistoricalData = async (
-  // stockSymbol,
-  // resolution,
-  // from,
-  // to,
-  symbol
-) => {
-  // const url = `${secondPath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+export const fetchHistoricalData = async (symbol) => {
   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&apikey=${process.env.REACT_APP_API_KEY_Alpha}`;
   const response = await fetch(url);
 
@@ -49,7 +42,11 @@ export const fetchHistoricalData = async (
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
   }
-  console.log(response);
+  const result = await response.json();
 
-  return await response.json();
+  if (!result.ok) {
+    throw new Error("Invalid data received from API");
+  }
+  console.log(result);
+  return result["Weekly Adjusted Time Series"];
 };
