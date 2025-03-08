@@ -13,7 +13,7 @@ import ChartFilter from "./ChartFilter";
 import ThemeContext from "../context/ThemeContext";
 import {
   convertDateToUnixTimeStamp,
-  convertUnixTimeStampToDate,
+  // convertUnixTimeStampToDate,
   createDate,
 } from "../helpers/date-helper";
 import { fetchHistoricalData } from "../api/stock-api";
@@ -37,7 +37,7 @@ const Chart = () => {
   // };
 
   const formatData = (rawData) => {
-    return Object.keys(rawData)
+    return Object.keys(rawData) // gets date
       .map((date) => ({
         date,
         value: parseFloat(rawData[date]["5 adjusted close"]).toFixed(2),
@@ -46,31 +46,32 @@ const Chart = () => {
   };
 
   useEffect(() => {
-    const getDateRange = () => {
-      const { days, weeks, months, years } = chartConfig[filter];
+    // const getDateRange = () => {
+    //   const { days, weeks, months, years } = chartConfig[filter];
 
-      const endDate = new Date();
-      const startDate = createDate(endDate - days, -weeks, -months, -years);
+    //   const endDate = new Date();
+    //   const startDate = createDate(endDate - days, -weeks, -months, -years);
 
-      const startTimeStampUnix = convertDateToUnixTimeStamp(startDate);
-      const endTimeStampUnix = convertDateToUnixTimeStamp(endDate);
+    //   const startTimeStampUnix = convertDateToUnixTimeStamp(startDate);
+    //   const endTimeStampUnix = convertDateToUnixTimeStamp(endDate);
 
-      return { startTimeStampUnix, endTimeStampUnix };
-    };
+    //   return { startTimeStampUnix, endTimeStampUnix };
+    // };
     const updateChartData = async () => {
       try {
         const result = await fetchHistoricalData(stockSymbol);
+        console.log("API resopnse: ", result);
         setData(formatData(result));
       } catch (error) {
         setData([]);
         console.log(error);
       }
     };
-
+    console.log("useEffect triggered with stockSymbol: ", stockSymbol);
     updateChartData();
   }, [stockSymbol]);
 
-  console.log(data); //data is imported correctly
+  // console.log(data); //data is imported correctly
 
   return (
     <Card>

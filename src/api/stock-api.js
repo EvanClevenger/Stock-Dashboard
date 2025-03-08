@@ -44,9 +44,15 @@ export const fetchHistoricalData = async (symbol) => {
   }
   const result = await response.json();
 
+  console.log("API Response: ", result);
+
   if (!result.ok) {
     throw new Error("Invalid data received from API");
   }
-  console.log(result);
+
+  if (result["Information"]) {
+    throw new Error("API Rate Limit Reached: " + result["Information"]);
+  }
+
   return result["Weekly Adjusted Time Series"];
 };
